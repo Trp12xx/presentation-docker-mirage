@@ -8,8 +8,8 @@ Containers and OS-less Applications
 
 :Author: Johannes Krampf
 
-Background
-==========
+Background - Running Applications
+=================================
 
 Bare-metal programming
 ----------------------
@@ -43,7 +43,7 @@ Architecture
 
 Multi-tasking Operating System
 ------------------------------
-.. image:: images/windows2000.png
+.. image:: images/windows2000.jpg
 
 
 Architecture
@@ -117,7 +117,6 @@ Docker - Advantages and Use cases
 Advantages:
 
 - Lightweight and fast
-- Easy scaling
 - Easy deployment and development
 - Portability of containers
 
@@ -130,7 +129,6 @@ Use cases for us:
 Docker - Concepts
 -----------------
 ..
-
   +---------------+
   | Repository    |
   | +-----------+ |
@@ -147,7 +145,6 @@ Docker - Concepts
 Docker - Concepts - Image
 -------------------------
 ..
-
    +----------------------+
    | Container Layer (rw) |
    +----------------------+
@@ -163,14 +160,13 @@ Docker - Concepts - Image
 Docker - Images example
 -----------------------
 ..
-
-   +-----+------+
-   | PHP | Perl |
-   +-----+------+---------+
-   |  Apache 2  | MySQL   |
-   +------------+---------+
-   |     Ubuntu 14.04     |
-   +----------------------+
+    +-----+------+
+    | PHP | Perl |
+    +-----+------+---------+
+    |  Apache 2  |  MySQL  |
+    +------------+---------+
+    |     Ubuntu 14.04     |
+    +----------------------+
 .. image:: images/images-example.png
 
 Docker - Concepts - Container
@@ -188,28 +184,26 @@ Docker - Constructing a container
 Goal:
   Create a web server
 
----
-
 Dockerfile::
 
-  FROM nginx
-  ADD . /usr/local/nginx/html
+   FROM nginx
+   ADD . /usr/local/nginx/html
 
 .. code:: bash
 
-  $ docker build .
-  $ docker run -dP <id> /usr/local/sbin/nginx
-  $ docker port <id> 80
+   $ docker build .
+   $ docker run -dP <id> /usr/local/sbin/nginx
+   $ docker port <id> 80
 
 Docker - Create an image manually
 ---------------------------------
 
 .. code:: bash
 
-  $ docker pull ubuntu:14.04
-  $ docker run ubuntu apt-get install -qq zip
-  $ docker ps -l
-  $ docker commit <id> demo/zip
+    $ docker pull ubuntu:14.04
+    $ docker run ubuntu apt-get install -y netcat
+    $ docker ps -l
+    $ docker commit <id> demo/nc
 
 Docker - Linking containers
 ---------------------------
@@ -218,11 +212,30 @@ Docker - Linking containers
     | Web server |     | Data base |
     +-----+------+     +-----+-----+
           |                  ^
-          |      Linking     |
+          |        Link      |
           +------------------+
 .. image:: images/linking.png
 
 Private networking between containers
+
+Ping-Pong linking example
+-------------------------
+
+Pong-Server:
+
+.. code:: bash
+
+    $ docker run --name pong demo/nc sh -c "
+    while true; do\
+        echo pong | nc -l 12345;\
+    done"
+
+Ping-Client:
+
+.. code:: bash
+
+    $ docker run --link pong:pong demo/nc sh -c "
+    echo ping $(date) | nc pong 12345"
 
 Docker - Deployment
 -------------------
@@ -230,3 +243,24 @@ Docker - Deployment
 1. Pull Image *or* Build from Dockerfile
 2. Run one or more containers
 
+Solution 2: OS-less Applications
+================================
+
+OS-less Applications - OpenMirage
+---------------------------------
+.. image:: images/mirage.jpg
+
+Architecture
+------------
+..
+    +-------------+-------------+
+    | Application | Application | 
+    +-------------+-------------+
+    |         Hypervisor        |
+    +---------------------------+
+    |          Hardware         |
+    +---------------------------+
+.. image:: images/architecture-mirage.png
+
+Questions
+=========
