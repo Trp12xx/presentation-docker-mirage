@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import multiprocessing
 import subprocess
 import tempfile
 
@@ -22,8 +23,12 @@ def extractDiagramAndImageName(iterator):
         if line == "..\n":
                 matching = True
 
-for diagram, image_name in extractDiagramAndImageName(lines):
+def create_diagram(args):
+    diagram, image_name = args
     with tempfile.NamedTemporaryFile("wt") as diagram_file:
         diagram_file.write(diagram)
         diagram_file.flush()
         subprocess.call(["ditaa", "-s", "5", diagram_file.name, image_name])
+
+with multiprocessing.Pool() as pool:
+    pool.map(create_diagram, extractDiagramAndImageName(lines))
