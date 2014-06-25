@@ -178,11 +178,18 @@ Docker - Concepts - Container
 - Networking between containers or with host
 - Resources (CPU, Memory, I/O) can be limited
 
-Docker - Constructing a container
+Docker - Create an image manually
 ---------------------------------
 
-Goal:
-  Create a web server
+.. code:: bash
+
+    $ docker pull ubuntu:14.04
+    $ docker run ubuntu apt-get install -y netcat
+    $ docker ps -l
+    $ docker commit <id> demo/nc
+
+Docker - Constructing an image
+------------------------------
 
 Dockerfile::
 
@@ -193,21 +200,15 @@ Dockerfile::
    CMD ["/usr/sbin/lighttpd", "-D", \
         "-f", "/etc/lighttpd/lighttpd.conf"]
 
+Docker - Running a container
+----------------------------
+
 .. code:: bash
 
    $ docker build -t webserver web-demo
    $ docker run -dP webserver
    $ docker port <id> 80
 
-Docker - Create an image manually
----------------------------------
-
-.. code:: bash
-
-    $ docker pull ubuntu:14.04
-    $ docker run ubuntu apt-get install -y netcat
-    $ docker ps -l
-    $ docker commit <id> demo/nc
 
 Docker - Linking containers
 ---------------------------
