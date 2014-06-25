@@ -100,9 +100,9 @@ Container
 Architecture
 ------------
 ..
-    +------+------+------+------+
-    | App. | App. | App. | App. | 
-    +------+------+------+------+
+    +-------------+-------------+
+    | Application | Application | 
+    +-------------+-------------+
     |  Container  |  Container  |
     +-------------+-------------+
     |      Operating System     |
@@ -111,19 +111,76 @@ Architecture
     +---------------------------+
 .. image:: images/architecture-container.png
 
+Docker - Advantages and Use cases
+---------------------------------
+
+Advantages:
+
+- Lightweight and fast
+- Easy scaling
+- Easy deployment and development
+- Portability of containers
+
+Use cases for us:
+
+- Development -> Testing -> Deployment cycle
+- Hadoop + Hadoop jobs
+- Easy deployment to external server
 
 Docker - Concepts
 -----------------
 ..
-    +-----------+
-    |   Image   |
-    +-----+-----+
+
+  +---------------+
+  | Repository    |
+  | +-----------+ |
+  | |   Image   | |
+  | +-----+-----+ |
+  +-------|-------+
           |
           V
     +-----+-----+
     | Container |
     +-----------+
 .. image:: images/docker.png
+
+Docker - Concepts - Image
+-------------------------
+..
+
+   +----------------------+
+   | Container Layer (rw) |
+   +----------------------+
+   |  Image N Layer (ro)  |
+   +----------------------+
+   +----------------------+
+   |  Image 2 Layer (ro)  |
+   +----------------------+
+   |    Base Image (ro)   |
+   +----------------------+
+.. image:: images/docker-image.png
+
+Docker - Images example
+-----------------------
+..
+
+   +-----+------+
+   | PHP | Perl |
+   +-----+------+---------+
+   |  Apache 2  | MySQL   |
+   +------------+---------+
+   |     Ubuntu 14.04     |
+   +----------------------+
+.. image:: images/images-example.png
+
+Docker - Concepts - Container
+-----------------------------
+
+- Environment for executing an application
+- Based on an image
+- Isolated from other containers/processes
+- Networking between containers or with host
+- Resources (CPU, Memory, I/O) can be limited
 
 Docker - Constructing a container
 ---------------------------------
@@ -173,18 +230,3 @@ Docker - Deployment
 1. Pull Image *or* Build from Dockerfile
 2. Run one or more containers
 
-Docker - Advantages and Use cases
----------------------------------
-
-Advantages:
-
-- Lightweight and fast
-- Easy scaling
-- Easy deployment and development
-- Portability of containers
-
-Use cases for us:
-
-- Development -> Testing -> Deployment cycle
-- Collaboration between developers
-- Easy deployment to external server
