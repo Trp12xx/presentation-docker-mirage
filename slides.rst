@@ -130,7 +130,7 @@ Docker - Concepts
 -----------------
 ..
   +---------------+
-  | Repository    |
+  : Repository    |
   | +-----------+ |
   | |   Image   | |
   | +-----+-----+ |
@@ -186,13 +186,17 @@ Goal:
 
 Dockerfile::
 
-   FROM nginx
-   ADD . /usr/local/nginx/html
+   FROM ubuntu:14.04
+   RUN apt-get install -y lighttpd
+   ADD demo-http-files /var/www
+   EXPOSE 80
+   CMD ["/usr/sbin/lighttpd", "-D", \
+        "-f", "/etc/lighttpd/lighttpd.conf"]
 
 .. code:: bash
 
-   $ docker build .
-   $ docker run -dP <id> /usr/local/sbin/nginx
+   $ docker build -t webserver web-demo
+   $ docker run -dP webserver
    $ docker port <id> 80
 
 Docker - Create an image manually
