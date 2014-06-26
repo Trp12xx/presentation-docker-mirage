@@ -248,6 +248,7 @@ Docker - Deployment
 1. Pull Image *or* Build from Dockerfile
 2. Run one or more containers
 
+
 Solution 2: OS-less Applications
 ================================
 
@@ -267,5 +268,52 @@ Architecture
     +---------------------------+
 .. image:: images/architecture-mirage.png
 
+Traditional Application Architecture
+------------------------------------
+..
+     +---------------------+
+     | configuration files |
+     +---------------------+
+     |  application binary |
+     +---------------------+
+     |   language runtime  |
+     +---------------------+
+     |   parallel threads  |
+     +---------------------+
+     |    user processes   |
+     +---------------------+
+     |      OS kernel      |
+     +---------------------+
+     |      hypervisor     |
+     +---------------------+
+     |       hardware      |
+     +---------------------+
+.. image:: images/traditional-application-architecture.png
+
+Mirage Application Architecture
+-------------------------------
+..
+    +------------------+
+    | application code |
+    | -=-------------- |
+    |  Mirage runtime  |
+    +------------------+
+    |    hypervisor    |
+    +------------------+
+    |     hardware     |
+    +------------------+
+.. image:: images/mirage-application-architecture.png
+
+Advantages
+----------
+
+- Security (only needed code included, W^X/sealing, static type checking)
+- Memory usage
+- Extremely fast start-up time (Images < 1MB, see also http://zerg.erlangonxen.org)
+- Execution speed (0-copy I/O, simplicity, whole program optimisation, 
+
 Questions
 =========
+
+Bonus - How this presentation was made
+======================================
