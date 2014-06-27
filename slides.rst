@@ -221,7 +221,8 @@ Docker - Linking containers
           +------------------+
 .. image:: images/linking.png
 
-Private networking between containers
+- Private networking between containers
+- Sharing of volumes between containers / with host
 
 Ping-Pong linking example
 -------------------------
@@ -248,6 +249,21 @@ Docker - Deployment
 1. Pull Image *or* Build from Dockerfile
 2. Run one or more containers
 
+Docker - Complex example
+------------------------
+..
+    /----------\
+    | Postgres +---------------+
+    \----+-----/               |
+         |                     |
+    /----+----------\   /------+--------\
+    |     Apache    |   |  Development  |
+    | ------------- |   | ------------- |
+    | Shared Volume |   | Shared Volume |
+    \---------------/   \---------------/
+.. image:: images/docker-complex.png
+
+Volume can be shared between containers or between Host and containers
 
 Solution 2: OS-less Applications
 ================================
@@ -304,13 +320,25 @@ Mirage Application Architecture
     +------------------+
 .. image:: images/mirage-application-architecture.png
 
+Modular Libraries
+-----------------
+
+- Different implementations: Can compile for Unix, Unix + Ocaml TCP/IP stack, Xen
+- Only needed libraries (e.g. IP, UDP, TCP, disk access) are compiled in
+
 Advantages
 ----------
 
-- Security (only needed code included, W^X/sealing, static type checking)
+- Security (only needed code included, W^X/sealing, static type checking also for drivers)
 - Memory usage
 - Extremely fast start-up time (Images < 1MB, see also http://zerg.erlangonxen.org)
-- Execution speed (0-copy I/O, simplicity, whole program optimisation, 
+- Execution speed (0-copy I/O, simplicity, whole program optimisation)
+
+Problems
+--------
+
+- No legacy applications, need to write drivers and applications from scratch/find implementations in OCaml
+- Many small deployments put high requirements on orchestration tools
 
 Questions
 =========
