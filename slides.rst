@@ -324,7 +324,7 @@ Modular Libraries
 -----------------
 
 - Different implementations: Can compile for Unix, Unix + Ocaml TCP/IP stack, Xen
-- Only needed libraries (e.g. IP, UDP, TCP, disk access) are compiled in
+- Only needed libraries (e.g. IP, UDP, TCP, disk access) are linked in
 
 Advantages
 ----------
