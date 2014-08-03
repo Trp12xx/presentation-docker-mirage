@@ -1,0 +1,3 @@
+These are the slides for a presentation I gave to co-workers about Docker and Mirage.
+
+Building the slides needs pandoc, ditaa and python3.
